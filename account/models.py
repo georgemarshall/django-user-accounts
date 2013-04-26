@@ -6,8 +6,6 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.db import models, transaction
 from django.db.models import Q
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.utils import timezone, translation
 from django.utils.encoding import python_2_unicode_compatible
@@ -40,11 +38,7 @@ class AbstractAccount(AbstractUser):
 
     @classmethod
     def for_request(cls, request):
-        if request.user.is_authenticated():
-            account = request.user
-        else:
-            account = AnonymousAccount(request)
-        return account
+        return request.user
 
     @classmethod
     def create(cls, request=None, **kwargs):

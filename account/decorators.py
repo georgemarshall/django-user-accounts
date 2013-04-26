@@ -1,11 +1,12 @@
 import functools
 
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.utils.decorators import available_attrs
 
 from account.utils import handle_redirect_to_login
 
 
-def login_required(func=None, redirect_field_name="next", login_url=None):
+def login_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
     """
     Decorator for views that checks that the user is logged in, redirecting
     to the log in page if necessary.
@@ -21,6 +22,6 @@ def login_required(func=None, redirect_field_name="next", login_url=None):
                 login_url=login_url
             )
         return _wrapped_view
-    if func:
-        return decorator(func)
+    if function:
+        return decorator(function)
     return decorator
